@@ -47,10 +47,10 @@ class TokenRefresh(Resource):
 
 class AllUser(Resource):
     def get(self):
-        return {"message":"List of users"}
+        return User.return_all()
 
-    def post(self):
-        return {"message":"Delete All users"}
+    def delete(self):
+        return User.delete_all()
 
 class SecretResource(Resource):
     def get(self):
