@@ -1,5 +1,5 @@
 from peewee import *
-
+from werkzeug.security import generate_password_hash, check_password_hash
 db = SqliteDatabase('flask-rest.db')
 
 
@@ -10,6 +10,18 @@ class BaseModel(Model):
 class User(BaseModel):
     username = CharField()
     password = CharField()
+
+
+    @property
+    def pwd(self):
+        raise AttributeError('password is not a readable atrribute')
+
+    @pwd.setter
+    def pwd(self, password):
+        self.password = generate_password_hash(password)
+
+    def verify_password(self,password):
+        return check_password_hash(self.password, password)
 
     @classmethod
     def get_user(cls,user):
